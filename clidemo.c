@@ -6,22 +6,17 @@ void print_argv (int argc, char **argv)
 {
   if (argc < 1)
     return;
-  putchar('(');
+  printf("%s(", *argv);
+  argv++;
+  argc--;
   while (1) {
     if (argc < 1) {
-      putchar(')');
-      putchar('\n');
+      printf(");\n");
       return;
     }
-    char *a = *argv;
-    while (*a != 0) {
-      putchar(*a);
-      a++;
-    }
-    if (argc > 1) {
-      putchar(',');
-      putchar(' ');
-    }
+    printf("%s", *argv);
+    if (argc > 1)
+      printf(", ");
     argv++;
     argc--;
   }
