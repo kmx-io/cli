@@ -7,6 +7,17 @@ char * readline (const char *prompt);
 
 #include "cli.h"
 
+void cli_init (s_cli *cli)
+{
+  using_history();
+  cli_prompt(cli, "> ");
+}
+
+void cli_prompt (s_cli *cli, const char *prompt)
+{
+  cli->prompt = prompt;
+}
+
 int cli_scan (s_cli *cli, const char *line)
 {
   unsigned i = 0;
@@ -40,5 +51,9 @@ int cli_scan (s_cli *cli, const char *line)
 int cli_read (s_cli *cli)
 {
   char * line = readline(cli->prompt);
-  return line ? cli_scan(cli, line) : (cli->argc = -1);
+  if (line) {
+    add_history(line);
+    return cli_scan(cli, line);
+  }
+  return (cli->argc = -1);
 }

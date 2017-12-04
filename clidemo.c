@@ -25,7 +25,8 @@ void print_argv (int argc, char **argv)
 int repl ()
 {
   s_cli cli;
-  cli.prompt = "clidemo> ";
+  cli_init(&cli);
+  cli_prompt(&cli, "clidemo> ");
   while (1) {
     cli_read(&cli);
     print_argv(cli.argc, cli.argv);
