@@ -1,0 +1,22 @@
+
+CLI is a general purpose command line interface library.
+
+CLI allows programmers to define access from command line to
+arbitrary functions. Users can then call the functions from command
+line without having to modify the program itself. Variadic functions
+
+CLI is implemented in C using GNU readline.
+
+The library comes along with CLIdemo which is a pretty good example
+of how to use CLI from C.
+
+
+TODO
+====
+
+ - Completion. Tab completion of commands is not yet supported.
+
+ - Typed patterns. Instead of just prefix command names, also allow for
+   command typed patterns to denote function application. For instance
+   "(int) + (int)" denotes infix integer addition.
+   See http://do.kmx.io/ for more information on typed patterns.
