@@ -1,4 +1,5 @@
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -11,6 +12,7 @@ void cli_init (s_cli *cli)
 {
   using_history();
   cli_prompt(cli, "> ");
+  cli_functions(cli, 0);
 }
 
 void cli_prompt (s_cli *cli, const char *prompt)
@@ -18,15 +20,21 @@ void cli_prompt (s_cli *cli, const char *prompt)
   cli->prompt = prompt;
 }
 
-int cli_scan (s_cli *cli, const char *line)
+void cli_functions (s_cli *cli, const s_cli_function *functions)
+{
+  cli->functions = functions;
+}
+
+int cli_scan (s_cli *cli)
 {
   unsigned i = 0;
+  char *line = cli->line;
   char *arg = cli->arg;
-  char **argv = cli->argv;
+  const char **argv = cli->argv;
   cli->argc = 0;
   *argv = arg;
   while (1) {
-    *arg = ((++i == 1000) ? 0 : *line);
+    *arg = ((++i == CLI_SIZE) ? 0 : *line);
     if (*arg == 0) {
       if (*argv != arg) {
         argv++;
@@ -50,10 +58,39 @@ int cli_scan (s_cli *cli, const char *line)
 
 int cli_read (s_cli *cli)
 {
-  char * line = readline(cli->prompt);
+  char *line = readline(cli->prompt);
+  cli->argc = -1;
+  cli->f = 0;
   if (line) {
-    add_history(line);
-    return cli_scan(cli, line);
+    strncpy(cli->line, line, CLI_SIZE - 1);
+    cli->line[CLI_SIZE - 1] = 0;
+    free(line);
+    add_history(cli->line);
+    cli_scan(cli);
+    if (0 < cli->argc)
+      cli->f = cli_find_function(cli, cli->argv[0], cli->argc - 1);
   }
-  return (cli->argc = -1);
+  return cli->argc;
+}
+
+f_cli cli_find_function (s_cli *cli, const char *name, int arity)
+{
+  const s_cli_function *function = cli->functions;
+  if (function == 0)
+    return 0;
+  while (1) {
+    if (function->name == 0)
+      return 0;
+    if (strcmp(function->name, name) == 0 &&
+        (function->arity < 0 || arity < 0 || function->arity == arity))
+      return function->f;
+    function++;
+  }
+}
+
+int cli_eval (s_cli *cli)
+{
+  if (0 < cli->argc && cli->f)
+    return cli->f(cli->argc - 1, cli->argv);
+  return -1;
 }
