@@ -14,9 +14,12 @@ of how to use CLI from C.
 TODO
 ====
 
+ - Use readline only from terminal, otherwise use stdio.
+
  - Completion. Tab completion of commands is not yet supported.
 
  - Typed patterns. Instead of just prefix command names, also allow for
    command typed patterns to denote function application. For instance
    "(int) + (int)" denotes infix integer addition.
-   See http://do.kmx.io/ for more information on typed patterns.
+   See http://dot-do-lang.kmx.io/ for more information about typed
+   patterns.
