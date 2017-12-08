@@ -4,6 +4,7 @@ CLI is a general purpose command line interface library.
 CLI allows programmers to define access from command line to
 arbitrary functions. Users can then call the functions from command
 line without having to modify the program itself. Variadic functions
+are supported by giving a negative arity.
 
 CLI is implemented in C using GNU readline.
 
