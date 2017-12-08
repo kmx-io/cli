@@ -73,7 +73,8 @@ int cli_readline (s_cli *cli)
     strncpy(cli->line, line, CLI_SIZE - 1);
     cli->line[CLI_SIZE - 1] = 0;
     free(line);
-    add_history(cli->line);
+    if (*cli->line)
+      add_history(cli->line);
     return 0;
   }
   if (fgets(cli->line, CLI_SIZE, stdin))
