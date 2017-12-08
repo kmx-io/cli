@@ -23,5 +23,5 @@ TODO
  - Typed patterns. Instead of just prefix command names, also allow for
    command typed patterns to denote function application. For instance
    "(int) + (int)" denotes infix integer addition.
-   See http://dot-do-lang.kmx.io/ for more information about typed
+   See http://dot-do-lang.kmx.io/typa for more information about typed
    patterns.
