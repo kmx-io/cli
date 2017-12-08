@@ -7,14 +7,15 @@ line without having to modify the program itself. Variadic functions
 
 CLI is implemented in C using GNU readline.
 
+CLI uses readline only if input is from a tty, otherwise stdio is used
+and no prompt is issued.
+
 The library comes along with CLIdemo which is a pretty good example
 of how to use CLI from C.
 
 
 TODO
 ====
-
- - Use readline only from terminal, otherwise use stdio.
 
  - Completion. Tab completion of commands is not yet supported.
 

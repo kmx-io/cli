@@ -1,4 +1,5 @@
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <readline/readline.h>
@@ -10,14 +11,21 @@ char * readline (const char *prompt);
 
 void cli_init (s_cli *cli)
 {
-  using_history();
-  cli_prompt(cli, "> ");
-  cli_functions(cli, 0);
+  if (isatty(0)) {
+    cli->prompt = "> ";
+    using_history();
+  }
+  else
+    cli->prompt = 0;
+  cli->functions = 0;
 }
 
 void cli_prompt (s_cli *cli, const char *prompt)
 {
-  cli->prompt = prompt;
+  if (isatty(0))
+    cli->prompt = prompt;
+  else
+    cli->prompt = 0;
 }
 
 void cli_functions (s_cli *cli, const s_cli_function *functions)
@@ -56,20 +64,32 @@ int cli_scan (s_cli *cli)
   }
 }
 
-int cli_read (s_cli *cli)
+int cli_readline (s_cli *cli)
 {
-  char *line = readline(cli->prompt);
-  cli->argc = -1;
-  cli->f = 0;
-  if (line) {
+  if (cli->prompt) {
+    char *line = readline(cli->prompt);
+    if (line == 0)
+      return -1;
     strncpy(cli->line, line, CLI_SIZE - 1);
     cli->line[CLI_SIZE - 1] = 0;
     free(line);
     add_history(cli->line);
-    cli_scan(cli);
-    if (0 < cli->argc)
-      cli->f = cli_find_function(cli, cli->argv[0], cli->argc - 1);
+    return 0;
   }
+  if (fgets(cli->line, CLI_SIZE, stdin))
+    return 0;
+  return -1;
+}
+
+int cli_read (s_cli *cli)
+{
+  cli->argc = -1;
+  cli->f = 0;
+  if (cli_readline(cli))
+    return -1;
+  cli_scan(cli);
+  if (0 < cli->argc)
+    cli->f = cli_find_function(cli, cli->argv[0], cli->argc - 1);
   return cli->argc;
 }
 
