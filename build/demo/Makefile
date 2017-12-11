@@ -2,7 +2,7 @@
 PROGRAM = clidemo
 SRCDIR = ../..
 
-CPPFLAGS =
+CPPFLAGS = -I.
 CFLAGS = -O0 -ggdb -W -Wall -Werror
 
 LDFLAGS =
