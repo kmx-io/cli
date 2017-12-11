@@ -8,7 +8,7 @@ CFLAGS = -O0 -ggdb -W -Wall -Werror -fpic
 LDFLAGS = -fPIC -shared
 LIBS = -lhistory -lreadline
 HEADERS = cli.h
-OBJECTS = cli.o clidemo.o
+OBJECTS = cli.o
 
 SRC = ${HEADERS} ${OBJECTS:%.o=%.c}
 
