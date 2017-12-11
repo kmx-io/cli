@@ -1,14 +1,14 @@
 
-PROGRAM = lib .so
+PROGRAM = libcli.so
 SRCDIR = ../..
 
 CPPFLAGS =
 CFLAGS = -O0 -ggdb -W -Wall -Werror -fpic
 
 LDFLAGS = -fPIC -shared
-LIBS =
-HEADERS =
-OBJECTS =
+LIBS = -lhistory -lreadline
+HEADERS = cli.h
+OBJECTS = cli.o clidemo.o
 
 SRC = ${HEADERS} ${OBJECTS:%.o=%.c}
 
