@@ -28,3 +28,7 @@ clean:
 	rm -f ${CLEANFILES}
 
 .PHONY: clean
+
+install:
+
+.PHONY: install

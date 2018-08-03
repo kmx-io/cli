@@ -28,3 +28,11 @@ clean:
 	rm -f ${CLEANFILES}
 
 .PHONY: clean
+
+install:
+	install -d -m 0755 "${PREFIX}/include/"
+	install -C -m 0644 ${HEADERS} "${PREFIX}/include/"
+	install -d -m 0755 "${PREFIX}/lib/"
+	install -C -m 0755 ${PROGRAM} "${PREFIX}/lib/"
+
+.PHONY: install
