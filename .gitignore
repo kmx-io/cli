@@ -1,1 +1,11 @@
+/.deps/
+/.libs/
 /build/
+/Makefile
+/config.h
+/config.log
+/config.status
+/libcli.la
+/libtool
+/stamp-*
+*.lo
