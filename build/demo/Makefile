@@ -6,7 +6,7 @@ CPPFLAGS = -I.
 CFLAGS = -O0 -ggdb -W -Wall -Werror
 
 LDFLAGS =
-LIBS = -lhistory -lreadline
+LIBS = -lreadline -ltermcap
 HEADERS = cli.h
 OBJECTS = cli.o clidemo.o
 
