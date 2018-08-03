@@ -64,6 +64,15 @@ int cli_scan (s_cli *cli)
   }
 }
 
+void trim_newline (char *str)
+{
+  unsigned int i = 0;
+  while (str[i])
+    i++;
+  if (i > 0 && str[i - 1] == '\n')
+    str[i - 1] = 0;
+}
+
 int cli_readline (s_cli *cli)
 {
   if (cli->prompt) {
@@ -77,8 +86,11 @@ int cli_readline (s_cli *cli)
       add_history(cli->line);
     return 0;
   }
-  if (fgets(cli->line, CLI_SIZE, stdin))
+  if (fgets(cli->line, CLI_SIZE, stdin)) {
+    trim_newline(cli->line);
+    puts(cli->line);
     return 0;
+  }
   return -1;
 }
 
