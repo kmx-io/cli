@@ -89,6 +89,17 @@ void trim_newline (char *str)
     str[i - 1] = 0;
 }
 
+int cli_read_file_line (s_cli *cli, FILE *fp)
+{
+  if (fgets(cli->line, CLI_SIZE, fp)) {
+    trim_newline(cli->line);
+    fputs(cli->prompt, stdout);
+    puts(cli->line);
+    return 0;
+  }
+  return -1;
+}
+
 int cli_readline (s_cli *cli)
 {
   if (cli->prompt) {
@@ -102,12 +113,19 @@ int cli_readline (s_cli *cli)
       add_history(cli->line);
     return 0;
   }
-  if (fgets(cli->line, CLI_SIZE, stdin)) {
-    trim_newline(cli->line);
-    puts(cli->line);
-    return 0;
-  }
-  return -1;
+  return cli_read_file_line(cli, stdin);
+}
+
+int cli_read_file (s_cli *cli, FILE *fp)
+{
+  cli->argc = -1;
+  cli->f = 0;
+  if (cli_read_file_line(cli, fp))
+    return -1;
+  cli_scan(cli);
+  if (0 < cli->argc)
+    cli->f = cli_find_function(cli, cli->argv[0], cli->argc - 1);
+  return cli->argc;
 }
 
 int cli_read (s_cli *cli)
