@@ -1,5 +1,5 @@
 AC_PREREQ([2.59])
-AC_INIT([cli], [0.1.0], [kmx.io], [cli], [http://kmx.io])
+AC_INIT([cli], [0.1], [kmx.io], [cli], [http://kmx.io])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
 AC_CONFIG_SRCDIR([cli.c])

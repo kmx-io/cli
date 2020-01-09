@@ -17,6 +17,7 @@
 #define CLI_H
 
 #include <stdio.h>
+#include "form.h"
 
 #define CLI_SIZE 1000
 

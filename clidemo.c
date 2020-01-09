@@ -16,7 +16,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <cli.h>
+#include "cli.h"
 
 int add_n (int argc, const char *argv[])
 {
